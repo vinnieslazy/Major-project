@@ -2,7 +2,10 @@ const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
   daysContainer = document.querySelector(".days"),
   prev = document.querySelector(".prev"),
-  next = document.querySelector(".next");
+  next = document.querySelector(".next"),
+  todayBtn = document.querySelector(".today-btn"),
+  gotoBtn = document.querySelector(".goto-btn"),
+  dateInput = document.querySelector(".date-input");
 
 let today = new Date();
 let activeDay;
@@ -80,7 +83,7 @@ initCalendar();
 function prevMonth() {
   month--;
   if (month < 0) {
-    month = 6;
+    month = 11;
     year--;
   }
   initCalendar();
@@ -90,7 +93,7 @@ function prevMonth() {
 
 function nextMonth() {
   month++;
-  if (month > 6) {
+  if (month > 11) {
     month = 0;
     year++;
   }
@@ -99,3 +102,49 @@ function nextMonth() {
 
 prev.addEventListener("click", prevMonth);
 next.addEventListener("click", nextMonth);
+
+// goto date and today button
+todayBtn.addEventListener("click", () => {
+  today = new Date();
+  month = today.getMonth();
+  year = today.getFullYear();
+  initCalendar();
+});
+
+dateInput.addEventListener("input", (e) => {
+  // allows only numbers removing anything else
+  dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
+  if (dateInput.value.length === 2) {
+    // add slash if two numbers entered
+    dateInput.value += "/";
+  }
+  if (dateInput.value.length > 7) {
+    dateInput.value = dateInput.value.slice(0, 7);
+  }
+
+  // if backpsace is pressed
+  if (e.inputType === "deleteContentBackward") {
+    if (dateInput.value.length === 3) {
+      dateInput.value = dateInput.value.slice(0, 2);
+    }
+  }
+});
+
+gotoBtn.addEventListener("click", gotoDate);
+
+// function to go to entered date
+
+function gotoDate() {
+  const dateArr = dateInput.value.split("/");
+  // data validation
+  if (dateArr.length === 2) {
+    if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
+      month === dateArr[0] - 1;
+      year = dateArr[1];
+      initCalendar();
+      return;
+    }
+  }
+  // if invalid date
+  alert("Invalid Date");
+}
