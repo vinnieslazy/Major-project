@@ -5,7 +5,10 @@ const calendar = document.querySelector(".calendar"),
   next = document.querySelector(".next"),
   todayBtn = document.querySelector(".today-btn"),
   gotoBtn = document.querySelector(".goto-btn"),
-  dateInput = document.querySelector(".date-input");
+  dateInput = document.querySelector(".date-input"),
+  addEventBtn = document.querySelector(".add-event"),
+  addEventWrapper = document.querySelector(".add-event-wrapper"),
+  addEventCloseBtn = document.querySelector(".close");
 
 let today = new Date();
 let activeDay;
@@ -122,6 +125,7 @@ dateInput.addEventListener("input", (e) => {
     dateInput.value = dateInput.value.slice(0, 7);
   }
 
+
   // if backpsace is pressed
   if (e.inputType === "deleteContentBackward") {
     if (dateInput.value.length === 3) {
@@ -130,9 +134,11 @@ dateInput.addEventListener("input", (e) => {
   }
 });
 
+
 gotoBtn.addEventListener("click", gotoDate);
 
 // function to go to entered date
+
 
 function gotoDate() {
   const dateArr = dateInput.value.split("/");
@@ -148,3 +154,16 @@ function gotoDate() {
   // if invalid date
   alert("Invalid Date");
 }
+
+addEventBtn.addEventListener("click", () => {
+  addEventWrapper.classList.add("active");
+});
+addEventCloseBtn.addEventListener("click", () => {
+  addEventWrapper.classList.remove("active");
+});
+
+document.addEventListener("click", (e) => {
+  if(e.target !== addEventBtn && !addEventContainer.contains(e.target)) {
+    addEventWrapper.classList.remove("active");
+  }
+});
