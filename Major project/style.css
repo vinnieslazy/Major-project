@@ -1,5 +1,5 @@
 :root {
-  --primary-clr: #b38add;
+  --primary-clr: #CC9902;
 }
 * {
   margin: 0;
@@ -26,7 +26,7 @@ body {
   display: flex;
 
   border-radius: 10px;
-  background-color: #373c4f;
+  background-color: #A3262A;
 }
 .left {
   width: 60%;
@@ -40,7 +40,7 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
-  color: #878895;
+  color: #A3262A;
   border-radius: 5px;
   background-color: #fff;
 }
@@ -251,11 +251,12 @@ body {
 .right .today-date .event-day {
   font-size: 2rem;
   font-weight: 500;
+  color: #F5AC27;
 }
 .right .today-date .event-date {
   font-size: 1rem;
   font-weight: 400;
-  color: #878895;
+  color: #F5AC27;
 }
 /* Design for Event Form */
 .events {
@@ -279,7 +280,7 @@ body {
   padding: 0 20px;
   padding-left: 50px;
   color: #fff;
-  background: linear-gradient(90deg, #3f4458, transparent);
+  background: linear-gradient(90deg, #F5AC27, transparent);
   cursor: pointer;
 }
 /* even event */
@@ -309,7 +310,7 @@ body {
 .events .event .event-time {
   font-size: 0.8rem;
   font-weight: 400;
-  color: #878895;
+  color: #fff;
   margin-left: 15px;
   pointer-events: none;
 }
@@ -344,8 +345,8 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  color: #878895;
-  border: 2px solid #878895;
+  color: #F5AC27;
+  border: 2px solid #F5AC27;
   opacity: 0.5;
   border-radius: 50%;
   background-color: transparent;
@@ -365,7 +366,7 @@ body {
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 500;
-  color: #878895;
+  color: #F5AC27;
 }
 .add-event-wrapper {
   position: absolute;
@@ -389,7 +390,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  color: #373c4f;
+  color: #A3262A;
   border-bottom: 1px solid #f5f5f5;
 }
 .add-event-header .close {
@@ -428,7 +429,7 @@ body {
   padding: 0 10px;
   font-size: 1rem;
   font-weight: 400;
-  color: #373c4f;
+  color: #A3262A;
 }
 .add-event-body .add-event-input input::placeholder {
   color: #a5a5a5;
@@ -461,6 +462,21 @@ body {
 .add-event-footer .add-event-btn:hover {
   background-color: transparent;
   color: var(--primary-clr);
+}
+.zodiac-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #A3262A;
+  font-size: 1.2rem;
+}
+
+.zodiac-image {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 /* media queries */
 

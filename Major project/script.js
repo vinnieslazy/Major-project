@@ -1,3 +1,4 @@
+
 const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
   daysContainer = document.querySelector(".days"),
@@ -36,6 +37,20 @@ const months = [
   "October",
   "November",
   "December",
+];
+const zodiacCycle = [
+  { name: "Rat", img: "zodiac/rat.png" },
+  { name: "Ox", img: "zodiac/ox.png" },
+  { name: "Tiger", img: "zodiac/tiger.png" },
+  { name: "Rabbit", img: "zodiac/rabbit.png" },
+  { name: "Dragon", img: "zodiac/dragon.png" },
+  { name: "Snake", img: "zodiac/snake.png" },
+  { name: "Horse", img: "zodiac/horse.png" },
+  { name: "Goat", img: "zodiac/goat.png" },
+  { name: "Monkey", img: "zodiac/monkey.png" },
+  { name: "Rooster", img: "zodiac/rooster.png" },
+  { name: "Dog", img: "zodiac/dog.png" },
+  { name: "Pig", img: "zodiac/pig.png" },
 ];
 
 
@@ -77,6 +92,8 @@ function initCalendar() {
 
   //   update date top of calendar
   date.innerHTML = months[month] + " " + year;
+  
+  updateZodiac(year); 
 
   //   adding days on dom(document object model)
 
@@ -241,28 +258,25 @@ addEventFrom.addEventListener("input", (e) => {
 // time format in from and to time
 addEventFrom.addEventListener("input", (e) => {
   // remove anything but numbers
-  addEventFrom.value = addEventFrom.value.replace(/[^0-9:]/g, "");
+  let value = addEventFrom.value.replace(/[^0-9]/g, "");
   // if two numbers entered auto add a colon
-  if( addEventFrom.value.length === 2) {
-    addEventFrom.value += ":";
+  if (value.length >= 3) {
+    value = value.slice(0, 4); // max 4 digits
+    value = value.slice(0, 2) + ":" + value.slice(2);
   }
-  // dont let the user enter more than 5 characters (HH:MM)
-  if (addEventFrom.value.length > 5) {
-    addEventFrom.value = addEventFrom.value.slice(0, 5);
-  }
+
+  addEventFrom.value = value;
 });
 // same with to time
 addEventTo.addEventListener("input", (e) => {
   // remove anything but numbers
-  addEventTo.value = addEventTo.value.replace(/[^0-9:]/g, "");
-  // if two numbers entered auto add a colon
-  if( addEventTo.value.length === 2) {
-    addEventTo.value += ":";
+  let value = addEventTo.value.replace(/[^0-9]/g, "");
+  if (value.length >= 3) {
+    value = value.slice(0, 4); // max 4 digits
+    value = value.slice(0, 2) + ":" + value.slice(2);
   }
-  // dont let the user enter more than 5 characters (HH:MM)
-  if (addEventTo.value.length > 5) {
-    addEventTo.value = addEventTo.value.slice(0, 5);
-  }
+
+  addEventTo.value = value;
 });
 
 
@@ -279,6 +293,7 @@ function addListner() {
       getActiveDay(e.target.innerHTML);
       // update events for active day
       updateEvents(Number(e.target.innerHTML));
+      activeDay = Number(e.target.innerHTML);
 
       // remove active from already active day
       days.forEach((day) => {
@@ -452,6 +467,7 @@ addEventSubmit.addEventListener("click", () => {
   // show current added event
 
   updateEvents(activeDay);
+  initCalendar();
 
 });
 
@@ -499,6 +515,7 @@ eventsContainer.addEventListener("click", (e) => {
     });
     // after removing fomer array update event
     updateEvents(activeDay);
+    initCalendar();
   }
 });
 
@@ -512,4 +529,15 @@ function getEvents() {
     return;
   }
     eventsArr.push(...JSON.parse(localStorage.getItem("events")));
+}
+
+function updateZodiac(year) {
+  const zodiacIndex = (year - 2020 + 12) % 12; // 2020 is Year of the Rat
+  const zodiac = zodiacCycle[zodiacIndex];
+  const imgElem = document.querySelector(".zodiac-image");
+  const nameElem = document.querySelector(".zodiac-name");
+
+  imgElem.src = zodiac.img;
+  imgElem.alt = zodiac.name;
+  nameElem.textContent = zodiac.name;
 }
