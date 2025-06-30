@@ -8,10 +8,12 @@
   font-family: "Poppins", sans-serif;
 }
 body {
+  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 30px;
   background-color: #e2e1dc;
 }
 .container {
@@ -22,6 +24,7 @@ body {
   padding: 5px;
   color: #fff;
   display: flex;
+
   border-radius: 10px;
   background-color: #373c4f;
 }
@@ -41,6 +44,7 @@ body {
   border-radius: 5px;
   background-color: #fff;
 }
+/* set after behind the main element */
 .calendar::before,
 .calendar::after {
   content: "";
@@ -85,10 +89,10 @@ body {
   justify-content: space-between;
   padding: 0 20px;
   font-size: 1rem;
-  font-weight: 500px;
+  font-weight: 500;
   text-transform: capitalize;
 }
-.calendar .weekdays div {
+.weekdays div {
   width: 14.28%;
   height: 100%;
   display: flex;
@@ -110,11 +114,25 @@ body {
   height: 90px;
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
   color: var(--primary-clr);
   border: 1px solid #f5f5f5;
 }
-.calendar .day:not(.prev-date, .next-date):hover {
+.calendar .days .day:nth-child(7n + 1) {
+  border-left: 2px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(7n) {
+  border-right: 2px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(-n + 7) {
+  border-top: 2px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(n + 29) {
+  border-bottom: 2px solid #f5f5f5;
+}
+
+.calendar .days .day:not(.prev-date, .next-date):hover {
   color: #fff;
   background-color: var(--primary-clr);
 }
@@ -154,16 +172,15 @@ body {
   transform: translateX(-50%);
   background-color: var(--primary-clr);
 }
-
-calendar .event:hover::after {
+.calendar .days .day:hover.event::after {
   background-color: #fff;
 }
-.calendar .active.event::after {
+.calendar .days .active.event::after {
   background-color: #fff;
   bottom: 20%;
 }
-.calendar .active.event {
-  padding: 10px;
+.calendar .days .active.event {
+  padding-bottom: 10px;
 }
 .calendar .goto-today {
   width: 100%;
@@ -174,7 +191,7 @@ calendar .event:hover::after {
   gap: 5px;
   padding: 0 20px;
   margin-bottom: 20px;
-  columns: var(--primary-clr);
+  color: var(--primary-clr);
 }
 .calendar .goto-today .goto {
   display: flex;
@@ -183,7 +200,7 @@ calendar .event:hover::after {
   overflow: hidden;
   border: 1px solid var(--primary-clr);
 }
-.calendar .goto-today .goto inout {
+.calendar .goto-today .goto input {
   width: 100%;
   height: 30px;
   outline: none;
@@ -207,7 +224,7 @@ calendar .event:hover::after {
 }
 .calendar .goto-today .goto button {
   border: none;
-  border-left: 1 px solid var(--primary-clr);
+  border-left: 1px solid var(--primary-clr);
   border-radius: 0;
 }
 .container .right {
@@ -216,6 +233,7 @@ calendar .event:hover::after {
   min-height: 100%;
   padding: 20px 0;
 }
+
 .right .today-date {
   width: 100%;
   height: 50px;
@@ -230,24 +248,25 @@ calendar .event:hover::after {
   margin-bottom: 20px;
   text-transform: capitalize;
 }
-.today-date .event-day {
+.right .today-date .event-day {
   font-size: 2rem;
   font-weight: 500;
 }
-.today-date .event-date {
+.right .today-date .event-date {
   font-size: 1rem;
   font-weight: 400;
   color: #878895;
 }
+/* Design for Event Form */
 .events {
   width: 100%;
   height: 100%;
-  max-height: 600;
+  max-height: 600px;
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 4px;
+  padding-left: 4px;
 }
 .events .event {
   position: relative;
@@ -260,9 +279,10 @@ calendar .event:hover::after {
   padding: 0 20px;
   padding-left: 50px;
   color: #fff;
-  cursor: pointer;
   background: linear-gradient(90deg, #3f4458, transparent);
+  cursor: pointer;
 }
+/* even event */
 .events .event:nth-child(even) {
   background: transparent;
 }
@@ -274,17 +294,16 @@ calendar .event:hover::after {
   align-items: center;
   pointer-events: none;
 }
-.events .event .event-title {
+.events .event .title .event-title {
   font-size: 1rem;
   font-weight: 400;
   margin-left: 20px;
 }
-.events .event .title i {
+.events .event i {
   color: var(--primary-clr);
   font-size: 0.5rem;
 }
-.events .event:hover .title i,
-.events .event:hover .event-time{ 
+.events .event:hover i {
   color: #fff;
 }
 .events .event .event-time {
@@ -294,7 +313,11 @@ calendar .event:hover::after {
   margin-left: 15px;
   pointer-events: none;
 }
-.event::after {
+.events .event:hover .event-time {
+  color: #fff;
+}
+/* add tick in event after */
+.events .event::after {
   content: "✓";
   position: absolute;
   top: 50%;
@@ -438,4 +461,65 @@ calendar .event:hover::after {
 .add-event-footer .add-event-btn:hover {
   background-color: transparent;
   color: var(--primary-clr);
+}
+/* media queries */
+
+@media screen and (max-width: 1000px) {
+  body {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .container {
+    min-height: 100vh;
+    flex-direction: column;
+    border-radius: 0;
+  }
+  .container .left {
+    width: 100%;
+    height: 100%;
+    padding: 20px 0;
+  }
+  .container .right {
+    width: 100%;
+    height: 100%;
+    padding: 20px 0;
+  }
+  .calendar::before,
+  .calendar::after {
+    top: 100%;
+    left: 50%;
+    width: 97%;
+    height: 12px;
+    border-radius: 0 0 5px 5px;
+    transform: translateX(-50%);
+  }
+  .calendar::before {
+    width: 94%;
+    top: calc(100% + 12px);
+  }
+  .events {
+    padding-bottom: 340px;
+  }
+  .add-event-wrapper {
+    bottom: 100px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .calendar .month {
+    height: 75px;
+  }
+  .calendar .weekdays {
+    height: 50px;
+  }
+  .calendar .days .day {
+    height: 40px;
+    font-size: 0.8rem;
+  }
+  .calendar .days .day.active,
+  .calendar .days .day.today {
+    font-size: 1rem;
+  }
+  .right .today-date {
+    padding: 20px;
+  }
 }
