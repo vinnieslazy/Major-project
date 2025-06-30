@@ -38,6 +38,7 @@ const months = [
   "November",
   "December",
 ];
+// Array of zodiac signs and their images
 const zodiacCycle = [
   { name: "Rat", img: "zodiac/rat.png" },
   { name: "Ox", img: "zodiac/ox.png" },
@@ -92,7 +93,7 @@ function initCalendar() {
 
   //   update date top of calendar
   date.innerHTML = months[month] + " " + year;
-  
+  //   update zodiac sign based on year
   updateZodiac(year); 
 
   //   adding days on dom(document object model)
@@ -358,6 +359,7 @@ function updateEvents(date) {
       event.month === month + 1 &&
       event.year === year
     ) {
+      // If events found for the day, add them to events string
       event.events.forEach((event) => {
         events += `<div class="event">
             <div class="title">
@@ -419,7 +421,7 @@ addEventSubmit.addEventListener("click", () => {
 
   const timeFrom = convertTime(eventTimeFrom);
   const timeTo = convertTime(eventTimeTo);
-
+// Check if from time is before to time
   const newEvent = {
     title: eventTitle,
     time: timeFrom + " - " + timeTo,
@@ -513,17 +515,20 @@ eventsContainer.addEventListener("click", (e) => {
         }
       }
     });
-    // after removing fomer array update event
+    // update events for active day
     updateEvents(activeDay);
     initCalendar();
   }
 });
 
-// store events in local storage get from there
+// Save events to local storage
+// This function is called whenever an event is added or removed
 function saveEvents() {
   console.log("Saving events to local storage");
   localStorage.setItem("events", JSON.stringify(eventsArr));
 }
+// Get events from local storage
+// If no events found, return empty array
 function getEvents() {
   if (localStorage.getItem("events" === null)) {
     return;
@@ -531,6 +536,8 @@ function getEvents() {
     eventsArr.push(...JSON.parse(localStorage.getItem("events")));
 }
 
+// Update zodiac sign based on the year
+// Zodiac signs are based on the Chinese zodiac cycle, which repeats every 12 years.
 function updateZodiac(year) {
   const zodiacIndex = (year - 2020 + 12) % 12; // 2020 is Year of the Rat
   const zodiac = zodiacCycle[zodiacIndex];
