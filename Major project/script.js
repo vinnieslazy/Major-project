@@ -530,10 +530,9 @@ function saveEvents() {
 // Get events from local storage
 // If no events found, return empty array
 function getEvents() {
-  if (localStorage.getItem("events" === null)) {
-    return;
-  }
-    eventsArr.push(...JSON.parse(localStorage.getItem("events")));
+  const storedEvents = localStorage.getItem("events");
+  if (!storedEvents) return;
+  eventsArr.push(...JSON.parse(storedEvents));
 }
 
 // Update zodiac sign based on the year
